@@ -51,7 +51,7 @@ ENTRYPOINT python "/app/service_1.py"
 ### docker run 
 ######################################################################################################
 docker pull tomornb/poc_bule_green:service_1
-docker pull tomornb/poc_bule_green:service_2
+docker pull tomornb/poc_bule_green:service_2.1
 
 docker run -d --rm -p 5000:5000  tomornb/poc_bule_green:service_1
 docker run -d --rm -p 5000:5000  tomornb/poc_bule_green:service_2

@@ -16,4 +16,4 @@ COPY app/ app/
 RUN pip install -r /app/requirements.txt
 
 ## Run the built product when the container launches
-ENTRYPOINT python "/app/service_2.py"
+ENTRYPOINT python "/app/service_1.py"
