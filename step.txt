@@ -9,8 +9,9 @@ docker run -it --rm python:slim-bullseye bash
 ######################################################################################################
 FROM python:slim-bullseye
 
-ENV http_proxy "http://10.117.4.18:8080"
-ENV https_proxy "http://10.117.4.18:8080"
+## set proxy for palladium12
+#ENV http_proxy "http://10.117.4.18:8080"
+#ENV https_proxy "http://10.117.4.18:8080"
 
 ## install curl
 RUN apt update && apt upgrade
@@ -27,16 +28,33 @@ RUN pip install -r /app/requirements.txt
 ENTRYPOINT python "/app/service_1.py"
 
 ######################################################################################################
-### docker build imags
+### docker build imags on githup
 ######################################################################################################
-docker build --rm --no-cache -f "Dockerfile_Service_1" -t poc_bule_green:service_1 . 
-docker build --rm --no-cache -f "Dockerfile_Service_2" -t poc_bule_green:service_2 . 
+	# create respositories : POC_Bule_Green
+	# git clone https://github.com/tomornb/POC_Bule_Green.git
+	# new folder and file : .github/workflows/
+		- docker-publish.yml
+		- docker-image.yml
+	# create parameter for login dockerhup
+		- https://github.com/tomornb/POC_Bule_Green/settings/secrets/actions
+			- DOCKER_PASSWORD
+			- DOCKER_USERNAME
+	# create new release
+		- https://github.com/tomornb/POC_Bule_Green/releases/new
+	# view log
+		- https://github.com/tomornb/POC_Bule_Green/actions
+		
+#docker build --rm --no-cache -f "Dockerfile_Service_1" -t poc_bule_green:service_1 . --> build on server palladium12 เจอ error
+#docker build --rm --no-cache -f "Dockerfile_Service_2" -t poc_bule_green:service_2 . --> build on server palladium12 เจอ error
 
 ######################################################################################################
 ### docker run 
 ######################################################################################################
-docker run -it --rm poc_bule_green:service_1 bash
-docker run -it --rm poc_bule_green:service_2 bash
+docker pull tomornb/poc_bule_green:service_1
+docker pull tomornb/poc_bule_green:service_2
+
+docker run -d --rm -p 5000:5000  tomornb/poc_bule_green:service_1
+docker run -d --rm -p 5000:5000  tomornb/poc_bule_green:service_2
 
 docker run --rm poc_bule_green:service_1 -p 5000:8081
 
