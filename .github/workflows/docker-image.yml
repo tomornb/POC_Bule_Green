@@ -15,5 +15,5 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image API For Test Bule Green
-      run: docker build . --file Dockerfile --tag tomornb/poc_bule_green:service_2
+      run: docker build . --file Dockerfile --tag tomornb/poc_bule_green
 	  
